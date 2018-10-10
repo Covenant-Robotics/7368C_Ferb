@@ -7,4 +7,10 @@ void driveSet(int left, int right);
     // Creates the drive initialize function
 void driveInit();
 
+void leftGetPos();
+
+void rightGetPos();
+
+int driveGetPos();
+
 #endif

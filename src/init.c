@@ -40,4 +40,7 @@ void initialize() {
   capInit();
   driveInit();
   ballInit();
+  lcdInit(uart1);
+  lcdClear(uart1);
+  lcdSetBacklight(uart1, true);
 }
