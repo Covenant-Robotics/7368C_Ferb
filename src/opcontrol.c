@@ -3,13 +3,15 @@
  int power;
  int turn;
  int lift;
- int flip;
+ bool liftHold;
+ int flipper;
+ bool flip;
  bool spinner;
- bool notspinner;
+ bool notSpinner;
  int spin;
  int fly;
- bool flyhigh;
- bool flylow;
+ bool flyHigh;
+ bool flyLow;
 
 
 void operatorControl() {
@@ -17,7 +19,7 @@ void operatorControl() {
 		delay(20);
 
     lcdSetText(uart1, 1, "COVENANT");
-  
+
 ////////////////////////////////////////////////////////////////////////////////
 //                                 DRIVE CODE                                 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -38,12 +40,23 @@ void operatorControl() {
 ////////////////////////////////////////////////////////////////////////////////
 //                                 LIFT CODE                                  //
 ////////////////////////////////////////////////////////////////////////////////
-		if (buttonGetState(JOY1_6U)) {
+    if (buttonIsNewPress(JOY1_7U)) {
+      liftHold = !liftHold;
+    }
+    if (buttonGetState(JOY1_6U)) {
 			lift = 100;
 		}
 		else if (buttonGetState(JOY1_6D)) {
 			lift = -60;
 		}
+    else if (liftHold) {
+      if (analogRead(LIFT_POT) < 400) {
+        lift = 80;
+      }
+      else {
+        lift = 0;
+      }
+    }
 		else {
 			lift = 0;
 		}
@@ -52,14 +65,26 @@ void operatorControl() {
 ////////////////////////////////////////////////////////////////////////////////
 //                                FLIPPER CODE                                //
 ////////////////////////////////////////////////////////////////////////////////
-    if (buttonGetState(JOY1_8R)) {
-      flip = 100;
+    if (buttonIsNewPress(JOY1_8R)) {
+      flip = !flip;
+    }
+    if (flip) {
+      if(analogRead(FLIP_POT) > 100) {
+        flipper = 80;
+      }
+      else {
+        flipper = 0;
+      }
     }
     else {
-      flip = 0;
+      if (analogRead(FLIP_POT) < 1000) {
+        flipper = -80;
+      }
+      else {
+        flipper = 0;
+      }
     }
-    flipSet(flip);
-
+    flipSet(flipper);
 ////////////////////////////////////////////////////////////////////////////////
 //                                 SPINNER CODE                               //
 ////////////////////////////////////////////////////////////////////////////////
@@ -67,12 +92,12 @@ void operatorControl() {
     spinner = !spinner;
   }
   if (buttonIsNewPress(JOY1_8D)) {
-    notspinner = !notspinner;
+    notSpinner = !notSpinner;
   }
   if (spinner) {
     spin = 100;
   }
-  else if (notspinner) {
+  else if (notSpinner) {
     spin = -100;
   }
   else {
@@ -83,15 +108,15 @@ void operatorControl() {
 //                             FLYWHEEL CODE                                  //
 ////////////////////////////////////////////////////////////////////////////////
   if (buttonIsNewPress(JOY1_5U)) {
-    flyhigh = !flyhigh ;
+    flyHigh = !flyHigh ;
   }
   if (buttonIsNewPress(JOY1_5D)) {
-    flylow = !flylow ;
+    flyLow = !flyLow ;
   }
-  if (flyhigh) {
+  if (flyHigh) {
     fly = 120;
   }
-  else if (flylow) {
+  else if (flyLow) {
     fly = 70;
   }
   else {

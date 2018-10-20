@@ -8,8 +8,8 @@
 #include "mtrmgr.h"
 #include "config.h"
 #include "drive.h"
-#include "cap.h"
-#include "ball.h"
+#include "capIntake.h"
+#include "ballIntake.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //             EDIT ABOVE ONLY, AND ONLY TO #include HEADERS                  //
