@@ -12,13 +12,15 @@
 #define SPIN 8
 #define FLYWHEEL 9
 
+//     Digital Ports
 // drive encoders
 #define LEFT_TOP 1
 #define LEFT_BOTTOM 2
 #define RIGHT_TOP 3
 #define RIGHT_BOTTOM 4
 
-// other sensors
+//     Analog Ports
+// potentimeters
 #define FLIP_POT 6
 #define LIFT_POT 7
 
